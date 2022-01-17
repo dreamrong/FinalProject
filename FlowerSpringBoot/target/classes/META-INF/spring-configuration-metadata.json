@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "database",
+      "type": "tw.sure.model.DataBaseProperties",
+      "sourceType": "tw.sure.model.DataBaseProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "database.drivername",
+      "type": "java.lang.String",
+      "sourceType": "tw.sure.model.DataBaseProperties"
+    },
+    {
+      "name": "database.password",
+      "type": "java.lang.String",
+      "sourceType": "tw.sure.model.DataBaseProperties"
+    },
+    {
+      "name": "database.url",
+      "type": "java.lang.String",
+      "sourceType": "tw.sure.model.DataBaseProperties"
+    },
+    {
+      "name": "database.username",
+      "type": "java.lang.String",
+      "sourceType": "tw.sure.model.DataBaseProperties"
+    }
+  ],
+  "hints": []
+}
