@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>會員訂單管理．Flower Forever</title>
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- jQuery UI 樣式表 and jQuery and jQuery UI -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- 以下是詳情頁面參數 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+<!-- -------- 和豐的外掛連結 -------- -->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="js/adminShowOrHidden.js"></script>
+
+<script src="js/DateFormate.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="../AdminPage/js/Pagination.js"></script>
+    
+	<script src="http://localhost:8080/IIIProject/js/checkLoginCookie.js"></script>
+    
+    <link rel="icon" href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />    
+
+
+
+<style>
+/* -------- 和豐的 CSS -------- */
+.inputbox {
+	width: 500px;
+}
+
+.gender {
+	margin-left: 150px;
+}
+
+.titleinfo {
+	padding-left: 20px;
+	margin-bottom: 30px;
+}
+
+input {
+	margin: 10px 0px;
+}
+
+/*---------- 整版通用 ------------*/
+* {
+	margin: 0;
+	padding: 0;
+	/* css3盒子模型 */
+	box-sizing: border-box;
+}
+
+.w {
+	width: 1500px;
+	margin: 0 auto;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+/*---------- Header Area 此處有改原稿的43------------*/
+.navbar-brand img {
+	width: 42px;
+}
+/*---------- Content Body Area ------------*/
+.content {
+	margin: 80px auto 50px auto;
+	padding-top: 10px;
+	width: 1500px;
+	/* 	height: 800px; */
+	/* 	background-color: grey; */
+}
+
+.content-left {
+	float: left;
+	width: 250px;
+	height: 100px;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: #e3b7ae;
+}
+
+.content-right {
+	float: right;
+	width: 1220px;
+	/* 	height: 600px; */
+	margin-top: 10px;
+	margin-right: 10px;
+	background-color: #ecf0f1;
+}
+
+.left-title {
+	height: 50px;
+	width: 100%;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.left-title>a {
+	display: block;
+	width: 100%;
+	height: 50px;
+	/*垂直居中*/
+	line-height: 50px;
+	/*水平居中*/
+	text-align: center;
+	color: #2f3542;
+	font-weight: 600;
+}
+
+.seg {
+	height: 1px;
+	width: 100%;
+	background-color: #2f3542;
+}
+
+.nav2 {
+	margin-top: 5px 0;
+}
+
+.nav2-title {
+	height: 40px;
+	width: 100%;
+	color: #2f3542;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+}
+
+.nav2-menu {
+	height: 60px;
+}
+
+.nav2-content {
+	width: 100%;
+	height: 100%;
+	background-color: #f3efec;
+}
+
+.nav2-content>a {
+	display: block;
+	height: 30px;
+	width: 100%;
+	color: black;
+	text-align: center;
+	line-height: 30px;
+	font-size: 16px;
+}
+
+.nav2-content>a:hover {
+	display: block;
+	height: 30px;
+	width: 100%;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 30px;
+	background-color: black;
+}
+
+/* -----------------右邊修改 CSS區----------------- */
+.btnbox {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 50px;
+}
+
+h2 {
+	margin-left: 80px;
+	font-weight: bold;
+}
+
+.form-control {
+	width: 300px;
+}
+
+.dialog {
+	padding-left: 300px;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+	width: 80px;
+	margin: 10px 35px;
+	backgound: #d9dbdc;
+	
+}
+
+.ui-dialog .ui-dialog-buttonpane button:hover {
+	background: #778ca3;
+	color: #f5f6fa;
+}
+
+.page-item.active .page-link {
+	z-index: 3;
+	color: black;
+	background-color: #ecf0f1;
+	border-color: #ecf0f1;
+}
+
+.page-item>a {
+	background: #ecf0f1;
+	color: black;
+	border-color: #ecf0f1;
+}
+
+/* ------------Table 格式調整------------ */
+.table td, .table th {
+	/*     padding: .75rem; */
+	vertical-align: middle;
+	align: center;
+	border-top: 1px solid #dee2e6;
+}
+
+/* ----------宗樺訂單明細按鈕 Button CSS------------ */
+
+.slide-btn{
+	font-size: 15px;
+	padding: 3px 3px;
+}
+
+.slide-btn:hover{
+	background: #57606f;
+	color:#ffffff;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+	$(function(){
+		//bootstrap與Jquery UI 按鈕樣式衝突的解決辦法/
+		bootstrapButton = $.fn.button.noConflict(); 
+		$.fn.bootstrapBtn = bootstrapButton;	
+	});
+
+	//登入登出
+    function signOut() {
+//         var auth2 = gapi.auth2.getAuthInstance();
+//         auth2.signOut().then(function () {
+//             console.log('Google User signed out.');
+//         });
+            $("#memberLogin").hide();
+            $("#adminLogin").hide();
+            $("#cartLogin").show();
+            $(".logoutState").hide();
+            $("#loginState").show();
+            window.location = "http://localhost:8080/IIIProject/yu/html/homePage.html";
+    }
+
+//     function onLoad() {
+//         gapi.load('auth2', function () {
+//             gapi.auth2.init();
+//         });
+//     }
+
+    function goToLogin() {
+        window.location = "http://localhost:8080/IIIProject/login.html";
+    }
+    
+    $(function () {
+        let loginAccount = getCookie("account");
+        let loginStatus = getCookie("status");
+        if (loginAccount == '') {//未登入
+            $("#memberLogin").hide();
+            $("#adminLogin").hide();
+            $("#cartLogin").show();
+            $(".logoutState").hide();
+            $("#loginState").show();
+            
+        } else if(loginStatus == 'admin'){
+            $("#welecomeName").text("管理員，您好");
+            $("#memberLogin").hide();
+            $("#adminLogin").show();
+            $("#cartLogin").hide();
+            $(".logoutState").show();
+            $("#loginState").hide();
+            
+        } else {
+            $("#welecomeName").text(getCookie("username")+"，您好");
+            $("#memberLogin").show();
+            $("#adminLogin").hide();
+            $("#cartLogin").show();
+            $(".logoutState").show();
+            $("#loginState").hide();
+        }
+
+    })
+    
+    
+</script>
+
+
+<!-- -----和豐的 會員訂單管理 OrdersMember 的JS---- -->
+       <script>
+
+        function OrderAlreadyExists(Order_id, Product_id) {
+            let array = [];
+            $("tbody tr td:nth-child(2)").each(function () {
+                let data = $(this).text();
+                // console.log(data);
+                array.push(data);
+            })
+
+            let array2 = [];
+            $("tbody tr td:nth-child(3)").each(function () {
+                let data = $(this).text();
+                // console.log(data);
+                array2.push(data);
+            })
+
+            return (array.indexOf(Order_id) != -1) && (array2.indexOf(Product_id) != -1);
+        }
+
+//         function fixOrderField() {
+//             let boolOrderId = $("#Order_id")[0].disabled;
+//             let boolProductId = $("#Product_id")[0].disabled;
+//             if (boolOrderId == true || boolProductId == true) {
+//                 boolOrderId = false;
+//                 boolProductId = false;
+//             }
+//         }
+//         function cancelAllSelect() {
+//             $('tbody tr td input[type="checkbox"]:checked').each(function () {
+//                 this.checked = false;
+//             })
+//         }
+
+
+//         function resetDialog() {
+//             $("#Order_id").val("");
+//             $("#Product_id").val("");
+//             $("#Buy_amount").val("");
+//             $("#Account").val("");
+//             $("#Order_date").val("");
+//             $("#Pickup_date").val("");
+
+//             fixOrderField();
+
+//         }
+
+//         function updateCell() {
+//             let ln = $("input:checked").length;
+//             if (ln > 1) {
+//                 alert("一次只能更新一筆資料!!!");
+//             } else if (ln < 1) {
+//                 alert("請選取一筆資料");
+//             } else {
+//                 resetDialog();
+//                 document.querySelector("#ui-id-1").innerText = "更新訂單";
+
+
+//                 let updateList = ['Order_id', 'Product_id', 'Buy_amount', 'Account', 'Order_date', 'Pickup_date'];
+//                 var dataJSON = {};
+
+//                 for (i = 1; i < 7; i++) {
+//                     dataJSON[updateList[i - 1]] = $("input:checked").parent().parent().children().eq(i)[0].innerText;
+//                 }
+
+//                 $("#Order_id").val(dataJSON["Order_id"]);
+//                 $("#Product_id").val(dataJSON["Product_id"]);
+//                 $("#Buy_amount").val(dataJSON["Buy_amount"]);
+//                 $("#Account").val(dataJSON["Account"]);
+//                 $("#Order_date").val(dataJSON["Order_date"]);
+//                 $("#Pickup_date").val(dataJSON["Pickup_date"]);
+
+//                 $("#Order_id")[0].disabled = true;
+//                 $("#Product_id")[0].disabled = true;
+
+//                 $("#dialog").dialog("open");
+//             }
+//         }
+        
+        
+
+        //詳細訂單
+        $(function () {
+            $("#dialog1").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 500,
+                height:500,
+                show: {effect: "blind", duration: 500},
+                hide: {effect: "blind", duration: 500},
+                buttons: {"確認": function () {
+                	$(this).dialog("close"); },
+				
+                }
+            });
+
+        });
+        
+        
+
+       
+        
+        
+        
+      //詳細訂單
+        function detailsCell(e) {
+			var or_id = e.id;
+			var pro_id = e.name;
+			console.log(or_id);
+            $.ajax({
+                method: "POST",
+                url: "http://localhost:8080/IIIProject/DetailsOrder",
+                data: { OrderId: or_id, ProductId:pro_id},
+                dataType: "json"
+            })
+                .done(function (msg) {
+                    console.log(msg);
+                    return msg;
+                }).then(
+                    function (res) {
+                    	console.log(res[0][4])
+                   		$("#dialog1").append('<form id="hiddenForm1" style="width: 100%;">'
+                        +'<label class="row"><span class="col-3 ">訂單編號</span><input class="col-6" type="text" id="Order_id1" name="Order_id1" value="'+res[0][0]+'" required readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">商品編號</span><input class="col-6" type="text" id="Product_id1" name="Product_id1" value="'+res[0][1]+'" required readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">購買數量</span><input class="col-6" type="text" id="Buy_amount1" name="Buy_amount1" value="'+res[0][2]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">會員帳號</span><input class="col-6" type="text" id="Account1" name="Account1" value="'+res[0][3]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">訂單日期</span><input class="col-6" type="text" id="Order_date1" name="Order_date1" value="'+res[0][4]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">取貨日期</span><input class="col-6" type="text" id="Pickup_date1" name="Pickup_date1" value="'+res[0][5]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">取貨時間</span><input class="col-6" type="text" id="Pickup_time1" name="Pickup_time1" value="'+res[0][6]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">取貨人</span><input class="col-6" type="text" id="Picker_name1" name="Picker_name1" value="'+res[0][7]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">手機電話</span><input class="col-6" type="text" id="Phone1" name="Phone1" value="'+res[0][8]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">Email</span><input class="col-6" type="text" id="Email1" name="Email1" value="'+res[0][9]+'" readonly></label><br>'
+                        +'<label class="row"><span class="col-3 ">備註</span><input class="col-6" type="text" id="Remark1" name="Remark1" value="'+res[0][10]+'" readonly></label><br></form>');
+//                     	$("#Order_id1").val(res[0][0]);
+//                     	$("#Product_id1").val(res[0][1]);
+//                     	$("#Buy_amount1").val(res[0][2]);
+//                     	$("#Account1").val(res[0][3]);
+//                     	$("#Order_date1").val(res[0][4]);
+//                     	$("#Pickup_date1").val(res[0][5]);
+//                     	$("#Pickup_time1").val(res[0][6]);
+//                     	$("#Picker_name1").val(res[0][7]);
+//                     	$("#Phone1").val(res[0][8]);
+//                     	$("#Email1").val(res[0][9]);
+//                     	$("#Remark1").val(res[0][10]);
+                    })
+                    $("#dialog1").dialog("open");
+        }
+        
+        
+        
+        
+        
+        
+        
+
+//         function deleteCell() {
+//             let ln = $("input:checked").length;
+//             for (i = 0; i < ln; i++) {
+//                 let deleteOrderId = $("input:checked").parent().parent().eq(i).children().eq(1)[0].innerText;
+//                 let deleteProductId = $("input:checked").parent().parent().eq(i).children().eq(2)[0].innerText;
+
+//                 console.log("刪除訂單ID:" + deleteOrderId);
+//                 console.log("刪除商品ID:" + deleteProductId);
+
+//                 let url = "http://localhost:8080/IIIProject/DeleteOrder";
+
+//                 $.ajax({
+//                     type: "POST",
+//                     url: url,
+//                     data: { Order_id: deleteOrderId, Product_id: deleteProductId },
+//                     success: function () {
+
+//                     }
+//                 });
+//             }
+//             alert("執行刪除!!");
+//             updateTable();//重新更新表格內容
+//         }
+
+
+        function updateTable() {
+            $.ajax({
+                method: "POST",
+                url: "http://localhost:8080/IIIProject/SearchOneOrder",
+                data: { Account: getCookie("account") },
+                dataType: "json"
+            })
+                .done(function (msg) {
+                    // console.log(msg);
+                    return msg;
+                }).then(
+                    function (res) {
+                        // console.log(res);
+                        let ln = res.length;
+                        let tableString = "";
+//                         let checkbox = '<input type="checkbox" onclick="" style="height:30px;width:30px">';
+
+                        for (i = 0; i < ln; i++) {
+//                             tableString += `<tr><td class="text-center">${checkbox}</td><td>${res[i][0]}</td><td>${res[i][1]}</td><td>${res[i][2]}</td><td>${res[i][3]}</td><td>${res[i][4]}</td><td>${res[i][5]}</td><td><button id="${res[i][0]}" name="${res[i][1]}" class="slide-btn" onclick="detailsCell(this)">訂單內容</button></td></tr>`;
+                            tableString += `<tr><td>${res[i][0]}</td><td>${res[i][1]}</td><td>${res[i][2]}</td><td>${res[i][3]}</td><td>${res[i][4]}</td><td>${res[i][5]}</td><td><button id="${res[i][0]}" name="${res[i][1]}" class="slide-btn" onclick="detailsCell(this)">訂單內容</button></td></tr>`;
+                        }
+                        $("tbody").html(tableString);
+                        $("#myInput").val("");
+
+                        $("#myTable tr").addClass("ShowPage");//目前應該要呈現的所有資料，全部頁面的資料。如果有使用過濾，則會移除不符合條件的tr的class - ShowPage(做分頁籤用)
+                        paginationCreate();//更新分頁籤
+
+                    })
+        }
+
+        $(function () {
+
+            updateTable();
+//             resetDialog();
+
+        })
+
+
+//         $(function () {
+//             $("#dialog").dialog({
+//                 autoOpen: false,
+//                 modal: true,
+//                 width: 340,
+//                 show: {
+//                     effect: "blind",
+//                     duration: 500
+//                 },
+//                 hide: {
+//                     effect: "blind",
+//                     duration: 500
+//                 },
+//                 open: function () {
+//                     let actionStatus = document.querySelector("#ui-id-1").innerText;
+//                     if (actionStatus == "新增訂單") {
+//                         $("#Order_id").removeAttr('disabled');
+//                         $("#Product_id").removeAttr('disabled');
+//                     }
+
+//                 },
+//                 close: function () {
+//                     resetDialog();
+//                 },
+//                 buttons: {
+//                     "確認": function () {
+//                         let orderId = $("#Order_id").val();
+//                         let ProductId = $("#Product_id").val();
+
+
+
+//                         let actionStatus = document.querySelector("#ui-id-1").innerText;
+//                         if (actionStatus == "新增訂單") {
+//                             $('#hiddenForm').attr("action", "http://localhost:8080/IIIProject/InsertOrder");
+//                         } else if (actionStatus == "更新訂單") {
+//                             $('#hiddenForm').attr("action", "http://localhost:8080/IIIProject/UpdateOrder");
+//                         }
+
+//                         if (orderId != "" && ProductId != "") {
+
+//                             if (document.querySelector("#ui-id-1").innerText == "新增訂單") {
+//                                 let bool = OrderAlreadyExists($("#Order_id").val(), $("#Product_id").val());
+//                                 if (bool == true) {
+//                                     alert("該筆訂單已經存在!!!");
+//                                     return;
+//                                 }
+//                             }
+
+//                             $("#Order_id").removeAttr('disabled');
+//                             $("#Product_id").removeAttr('disabled');
+//                             $("#CallBackUrl").val(document.URL);
+//                             $("#hiddenForm").submit();
+
+
+//                         } else {
+//                             alert("必填項目:Order_id, Product_id !");
+//                         }
+
+//                     },
+//                     "取消": function () {
+//                         resetDialog();
+//                         $(this).dialog("close");
+//                     }
+//                 }
+//             });
+
+//             $("label").css("width", "300px");
+//             $("label").addClass("text-left");
+//             $("input").css("width", "300px");
+
+
+//         })
+
+//         function createOrder() {
+//             resetDialog();
+//             document.querySelector("#ui-id-1").innerText = "新增訂單";
+//             $("#dialog").dialog("open");
+//         }
+        
+
+    </script>
+
+</head>
+
+
+<body style="background: #ecf0f1;">
+	<!-- Header Area -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ps-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="http://localhost:8080/IIIProject/yu/html/homePage.html"><img style="width:70px" src="http://localhost:8080/Finalproject/img/Logo/Logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active text-dark" href="http://localhost:8080/IIIProject/yu/html/homePage.html">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-dark" href="http://localhost:8080/IIIProject/news.html">最新消息</a>
+                        </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	商品
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/index">所有商品</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/flower">花束系列</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/gift">禮品系列</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	聯絡我們
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connect.html">客服</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectInfo.html">聯絡資訊</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                    </ul>
+                    <div class="d-flex ">                        
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div id="cartLogin" class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/Finalproject/CartStep1.jsp">購物車</a>
+                                </div>
+                            </li>
+                            <li class="nav-item" id="loginState">
+                                <div class="nav-link active ">
+                                    <button onclick="goToLogin();" class="btn btn-secondary">登入</button>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item logoutState">
+                            
+                                <div class="nav-link active ">
+                                    <span id="welecomeName" class="nav-link fw-bold text-decoration-underline" href="http://localhost:8080/IIIProject/MemberCenter/MemberCenterHome.html" style="cursor:context-menu"></span>
+                                </div>
+                             </li>       
+							<li id="memberLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+	                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html">基本資料</a>
+					                    </li>
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html">訂單管理</a>
+					                    </li>
+			                        </ul>
+                                </div>
+                            </li>
+                            <li id="adminLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/IIIProject/AdminPage/AdminHome.html">管理員介面</a>
+                                </div>
+                            </li>
+                            <li class="nav-item logoutState">        
+                                <div class="nav-link active ">
+                                    <button onclick="signOutCookie();signOut();" class="btn btn-secondary">登出</button>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+	<!-- Body Area -->
+	<div class="content">
+		<div class="content-left">
+			<div class="left-title">
+				<a href="#">會員中心</a>
+			</div>
+			<!-- 分割線 -->
+			<div class="seg"></div>
+			<!-- 菜單欄導航 -->
+			<div class="nav2">
+				<!-- 單個菜單項 -->
+				<div class="nav2-menu">
+					<!-- 子標題 -->
+					<div class="nav2-content">
+						<a href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html" id="allprods2" class="navtext">基本資料</a>
+						<a href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html" id="allflowers" class="navtext">訂單管理</a>
+					</div>
+					<!-- 分割線 -->
+					<div class="seg"></div>
+				</div>
+			</div>
+		</div>
+		<!-- -----------------------------------------------------右邊內容區---------------------------------------------------------------------------- -->
+		<div class="content-right">
+
+			 <div id="isAdmin" class="">
+
+        <div class="container-fluid mt-3">
+        
+           <div class="btnbox">
+						<h2>訂單管理</h2>
+						<div class="btnbox2">
+						     	<input type="hidden" class="btn btn-success btn-lg" onclick='createOrder();'>
+						      	<input type="hidden" class="btn btn-info btn-lg" onclick='updateCell();'>
+       							<input type="hidden" class="btn btn-danger btn-lg" onclick="deleteCell();">
+       							<input type="hidden" class="btn btn-secondary btn-lg" onclick='cancelAllSelect();'>
+						
+<!-- 							<button class="btn btn-success btn-lg" onclick='createOrder();'>新增</button> -->
+<!-- 							<button class="btn btn-info btn-lg" onclick='updateCell();'>更新</button> -->
+<!-- 							<button class="btn btn-danger btn-lg" onclick="deleteCell();">刪除</button> -->
+<!-- 							<button class="btn btn-secondary btn-lg" onclick='cancelAllSelect();'>取消選取</button> -->
+							<!-- 						<a class="btn btn-primary btn-lg" href="AdminHome.html">回管理首頁</a> -->
+						</div>
+						<input class="form-control searchbox" id="myInput" type="text" placeholder="請輸入關鍵字 ...">
+					</div>
+					
+<!--             <table class="table table-bordered"> -->
+            <table class="table">
+                <thead>
+                    <tr>
+<!--                         <th>勾選</th> -->
+                        <th>訂單編號</th>
+                        <th>商品編號</th>
+                        <th>購買數量</th>
+                        <th>會員帳號</th>
+                        <th>訂單日期</th>
+                        <th>取貨日期</th>
+                        <th>訂單內容</th>
+                    </tr>
+                </thead>
+                <tbody id="myTable">
+                    <!-- <tr>
+                      <td>John</td>
+                      <td>Doe</td>
+                      <td>john@example.com</td>
+                    </tr> -->
+
+                </tbody>
+            </table>
+
+            <nav aria-label="Search results pages">
+                <ul class="pagination justify-content-center" id="paginationArea">
+                    <!-- <li class="page-item ">
+                        <a class="page-link" id="Previous" href="#" >上一頁</a>
+                    </li>
+
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                    <li class="page-item">
+                        <a class="page-link" id="Next" href="#">下一頁</a>
+                    </li> -->
+                </ul>
+            </nav>
+
+            <!-- <p>Note that we start the search in tbody, to prevent filtering the table headers.</p> -->
+        </div>
+     </div>
+
+
+        <script>
+            $(document).ready(function () {
+
+                $("#myInput").on("keyup", function () {
+
+                    var len = $(this).val().length;
+                    var firstWord = $(this).val()[0];
+                    var lastWord = $(this).val()[len - 1];
+                    if (firstWord == "\"" && lastWord == "\"" && len >= 2) {//如果使用雙引號將會變成絕對搜尋
+                        var value = $(this).val();
+                        $("#myTable tr").toggle(false);
+                        $("#myTable tr").each(function () {
+
+                            $(this).children().each(function (i, v) {
+
+                                if (value.indexOf("\"" + $(this).text() + "\"") > -1) {
+                                    $(this).parent().toggle(true);
+                                    // console.log("change!!");
+                                    $(this).parent().addClass("ShowPage");
+                                } else {
+                                    $(this).parent().removeClass("ShowPage");
+                                }
+                            })
+                        })
+                    } else {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").each(function () {//這裡可以把filter改成each，因為這只是單純的為了要在後面逐個執行判斷
+                            if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                                $(this).toggle(true)    //注意這裡一定要this.toggle
+                                $(this).addClass("ShowPage");
+                            } else {
+                                $(this).toggle(false);
+                                $(this).removeClass("ShowPage");
+                            }
+
+                        });//如果直接選div.toggle這樣toggle裡面的this判斷為真時，影響效果的是選取的整個div，但我們只要當前的，所以選用this
+
+                    }
+
+                    // $("#myTable tr").each(function () {//這裡可以把filter改成each，因為這只是單純的為了要在後面逐個執行判斷
+                    //     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)//注意這裡一定要this.toggle
+                    //   });//如果直接選div.toggle這樣toggle裡面的this判斷為真時，影響效果的是選取的整個div，但我們只要當前的，所以選用this
+
+
+                    paginationCreate();//重新製作頁面標籤
+
+
+
+                });
+            });
+
+// 參考 toggle https://www.w3school.com.cn/jquery/effect_toggle.asp
+//當toggle內為真時，會讓當前的物件或顯示；反之為假時，就會隱藏物件
+
+// 透過indexOf去讀取輸入視窗的內容來判斷要讓什麼物件顯示(true)或隱藏(false)，當使用者輸入欄位為空的時候，所有資料都會為true，也就都會顯示。
+
+// ref: https://www.w3schools.com/bootstrap4/tryit.asp?filename=trybs_filters_table&stacked=h
+        </script>
+
+
+
+    </div>
+
+<!--     <div id="dialog" title="更動訂單"> -->
+<!--         <form id="hiddenForm" action="" method="POST" style="width: 100%;"> -->
+<!--             <label> -->
+<!--                 訂單編號 -->
+<!--                 <input type="text" id="Order_id" name="Order_id" value="" required> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 商品編號 -->
+<!--                 <input type="text" id="Product_id" name="Product_id" value="" required> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 購買數量 -->
+<!--                 <input type="text" id="Buy_amount" name="Buy_amount" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 會員帳號 -->
+<!--                 <input type="text" id="Account" name="Account" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 訂單日期 -->
+<!--                 <input type="date" id="Order_date" name="Order_date" value=""> -->
+<!--             </label><br> -->
+
+<!--             <label> -->
+<!--                 取貨日期 -->
+<!--                 <input type="date" id="Pickup_date" name="Pickup_date" value=""> -->
+<!--             </label><br> -->
+<!--             <input type="hidden" id="CallBackUrl" name="CallBackUrl" value=""> -->
+<!--         </form> -->
+
+<!--     </div> -->
+
+    <div id="dialog1" title="詳細訂單">
+<!--         <form id="hiddenForm1" style="width: 100%;"> -->
+<!--             <label> -->
+<!--                 訂單編號 -->
+<!--                 <input type="text" id="Order_id1" name="Order_id1" value="" required> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 商品編號 -->
+<!--                 <input type="text" id="Product_id1" name="Product_id1" value="" required> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 購買數量 -->
+<!--                 <input type="text" id="Buy_amount1" name="Buy_amount1" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 會員帳號 -->
+<!--                 <input type="text" id="Account1" name="Account1" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 訂單日期 -->
+<!--                 <input type="text" id="Order_date1" name="Order_date1" value=""> -->
+<!--             </label><br> -->
+
+<!--             <label> -->
+<!--                 取貨日期 -->
+<!--                 <input type="text" id="Pickup_date1" name="Pickup_date1" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 取貨時間 -->
+<!--                 <input type="text" id="Pickup_time1" name="Pickup_time1" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 取貨人 -->
+<!--                 <input type="text" id="Picker_name1" name="Picker_name1" value=""> -->
+<!--             </label><br> -->
+<!--             <label> -->
+<!--                 手機電話 -->
+<!--                 <input type="text" id="Phone1" name="Phone1" value=""> -->
+<!--             </label><br>            -->
+<!--             <label> -->
+<!--                 Email -->
+<!--                 <input type="text" id="Email1" name="Email1" value=""> -->
+<!--             </label><br>            -->
+<!--             <label> -->
+<!--                 備註 -->
+<!--                 <input type="text" id="Remark1" name="Remark1" value=""> -->
+<!--             </label><br>            -->
+<!--         </form> -->
+
+    </div>
+
+</div>
+
+</body>
+</html>

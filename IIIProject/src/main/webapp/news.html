@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最新消息．Flower Forever</title>
+
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+	
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		crossorigin="anonymous">
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	
+	<script src="js/checkLoginCookie.js"></script>
+	
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+
+	<script src="http://localhost:8080/IIIProject/js/checkLoginCookie.js"></script>
+    
+    <link rel="icon" href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />
+    
+    
+<style type="text/css">
+.content {
+	margin: 80px auto 0 auto;
+	width: 1500px;
+	height: 900px;
+	background-color: grey;
+}
+
+.newstr {
+	color: black;
+	text-decoration: none;
+}
+</style>
+
+<script>
+
+//登入登出
+function signOut() {
+//     var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function () {
+//         console.log('Google User signed out.');
+//     });
+        $("#memberLogin").hide();
+        $("#adminLogin").hide();
+        $("#cartLogin").show();
+        $(".logoutState").hide();
+        $("#loginState").show();
+        window.location = "http://localhost:8080/IIIProject/yu/html/homePage.html";
+}
+
+// function onLoad() {
+//     gapi.load('auth2', function () {
+//         gapi.auth2.init();
+//     });
+// }
+
+function goToLogin() {
+    window.location = "http://localhost:8080/IIIProject/login.html";
+}
+
+$(function () {
+    let loginAccount = getCookie("account");
+    let loginStatus = getCookie("status");
+    if (loginAccount == '') {//未登入
+        $("#memberLogin").hide();
+        $("#adminLogin").hide();
+        $("#cartLogin").show();
+        $(".logoutState").hide();
+        $("#loginState").show();
+        
+    } else if(loginStatus == 'admin'){
+        $("#welecomeName").text("管理員，您好");
+        $("#memberLogin").hide();
+        $("#adminLogin").show();
+        $("#cartLogin").hide();
+        $(".logoutState").show();
+        $("#loginState").hide();
+        
+    } else {
+        $("#welecomeName").text(getCookie("username")+"，您好");
+        $("#memberLogin").show();
+        $("#adminLogin").hide();
+        $("#cartLogin").show();
+        $(".logoutState").show();
+        $("#loginState").hide();
+    }
+
+})
+
+
+
+	$(
+			function() {
+
+// 				if (getCookie("status") == "admin") {
+// 					console.log("admin");
+// 					$("#homelink").attr("href", "yu/html/homePage.html");
+// 				} else {
+// 					console.log("member");
+// 					$("#homelink").attr("href", "yu/html/homePage.html");
+// 				}
+
+				$.ajax({
+							url : "http://localhost:8080/IIIProject/NewsAPI/"
+						})
+						.done(
+								function(e) {
+									console.log(e);
+									let ln = e.length;
+									let tableString = "";
+									for (i = 0; i < ln; i++) {
+										let date = new Date(e[i].date)
+										let d1 = date.getFullYear();
+										let d2 = date.getMonth();
+										let d3 = date.getDate();
+										tableString += ` <tr><td>公告</td><td><a href="newsTemplate.html?newsId=${e[i].newsId}" class="newstr">${e[i].title}</></td><td>${d1}-${d2+1}-${d3}</td></tr>`;
+									}
+									$("#newsDataTable tbody").html(tableString);
+									let table = $('#newsDataTable').DataTable({
+					                    language: {
+					                        url: "js/Chinese-traditional.json"
+					                    }
+									});
+									table.order([ 1, 'desc' ]).draw();
+								})
+
+			})
+</script>
+</head>
+
+<body style="background-color:#f5f6fa">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ps-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="http://localhost:8080/IIIProject/yu/html/homePage.html"><img style="width:70px" src="http://localhost:8080/Finalproject/img/Logo/Logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/yu/html/homePage.html">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/news.html">最新消息</a>
+                        </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	商品
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/index">所有商品</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/flower">花束系列</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/gift">禮品系列</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	聯絡我們
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connect.html">客服</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectInfo.html">聯絡資訊</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                    </ul>
+                    <div class="d-flex ">                        
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div id="cartLogin" class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/Finalproject/CartStep1.jsp">購物車</a>
+                                </div>
+                            </li>
+                            <li class="nav-item" id="loginState">
+                                <div class="nav-link active ">
+                                    <button onclick="goToLogin();" class="btn btn-secondary">登入</button>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item logoutState">
+                            
+                                <div class="nav-link active ">
+                                    <span id="welecomeName" class="nav-link fw-bold text-decoration-underline" href="http://localhost:8080/IIIProject/MemberCenter/MemberCenterHome.html" style="cursor:context-menu"></span>
+                                </div>
+                             </li>       
+							<li id="memberLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+	                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html">基本資料</a>
+					                    </li>
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html">訂單管理</a>
+					                    </li>
+			                        </ul>
+                                </div>
+                            </li>
+                            <li id="adminLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/IIIProject/AdminPage/AdminHome.html">管理員介面</a>
+                                </div>
+                            </li>
+                            <li class="nav-item logoutState">        
+                                <div class="nav-link active ">
+                                    <button onclick="signOutCookie();signOut();" class="btn btn-secondary">登出</button>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+	<div style="height: 100px;"></div>
+	<div class="container">
+		<h2 class="mb-4">最新消息</h2>
+		<table id="newsDataTable" class="display " style="width: 100%">
+			<thead class="">
+				<tr>
+					<th class="col-2 text-start">分類</th>
+					<th class="col-7 text-start">標題</th>
+					<th class="col-3 text-start">發布日期</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+            </tr> -->
+
+			</tbody>
+
+		</table>
+
+	</div>
+
+	<!--footer-->
+	<hr class="mt-4" />
+    <footer>
+        <div class="container offset-2 col-md-9" style="height: 150px">
+            <div class="row align-items-start">
+                <div class="col-lg-3">
+                    <div class="fw-bolder">客戶服務</div>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+                    <br>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+                </div>
+                <div class="col-lg-5">
+                    <div class="fw-bolder">聯絡我們</div>
+                    <table>
+                    	<tr>
+                    		<td>服務時間</td>
+                    		<td>：</td>
+                    		<td>周二至周日 09:00-17:00</td>
+                    	</tr>
+                    	<tr>
+                    		<td>電話</td>
+                    		<td>：</td>
+                    		<td>(07)9699885</td>
+                    	</tr>
+                    	<tr>
+                    		<td>地址</td>
+                    		<td>：</td>
+                    		<td>高雄市前金區中正四路211號8號樓之10</td>
+                    	</tr>
+                    	<tr>
+                    		<td>客服信箱</td>
+                    		<td>：</td>
+                    		<td>iiiflowerforever@gmail.com</td>
+                    	</tr>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                	<div class="fw-bolder">社群媒體</div>
+                    <a href="https://instagram.com/iiiflowerforever?utm_medium=copy_link" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/instagram.png" style="width:5vh" />
+                    	<span class="">iiiflowerforever</span>
+                    </a>
+                    <br>
+                    <a href="https://www.facebook.com/Flower-Forever-%E8%8A%B1%E9%96%8B%E4%B8%8D%E6%95%97-108098771615167/" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/facebook.png" style="width:5vh" />
+                    	<span class="">Flower Forever 花開不敗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>

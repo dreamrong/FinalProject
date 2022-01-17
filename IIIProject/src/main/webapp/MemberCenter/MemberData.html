@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>會員基本資料．Flower Forever</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- jQuery UI 樣式表 and jQuery and jQuery UI -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- 以下是詳情頁面參數 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+	<script src="http://localhost:8080/IIIProject/js/checkLoginCookie.js"></script>
+    
+    <link rel="icon" href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />
+    
+<!-- ------和豐會員基本資料 MemberData 參數 ------- -->
+<script>
+	$(function() {
+		$("#CallBackUrl").val(document.URL);
+
+		$("form").submit(function() {
+			if (getCookie("status") == "admin") {
+				alert("管理員資料禁止在此頁面變更")
+				return false;
+			}
+
+			alert("更新資料!");
+			$("#account").removeAttr('disabled');
+			return true;
+		})
+
+		$.ajax({
+			url : "http://localhost:8080/IIIProject/GetOneMember",
+			method : "POST",
+			data : {
+				account : getCookie("account")
+			}
+		}).always(function(e) {
+
+			let res = e.responseText;
+			if (res.includes("Success")) {
+				console.log("成功載入");
+				res = res.split(",");
+				// console.log(res[1]);
+				$("#name").val(res[1]);
+				$("#account").val(res[3]);
+				$("#account")[0].disabled = true;
+
+				$("#password").val(res[4]);
+				$("#email").val(res[5]);
+				$("#birthDate").val(res[6]);
+
+				if (res[7] != "" && res[7] != null) {
+					$(`#dataform input[value=${res[7]}]`)[0].checked = true;
+				}
+
+				$("#address").val(res[8]);
+				$("#phone").val(res[9]);
+			} else {
+				console.log("載入失敗");
+			}
+		})
+
+	})
+</script>
+
+
+<style>
+/*---------- 整版通用 ------------*/
+* {
+	margin: 0;
+	padding: 0;
+	/* css3盒子模型 */
+	box-sizing: border-box;
+}
+
+.w {
+	width: 1500px;
+	margin: 0 auto;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+/*---------- Header Area 此處有改原稿的43------------*/
+.navbar-brand img {
+	width: 42px;
+}
+/*---------- Content Body Area ------------*/
+.content {
+	margin: 80px auto 50px auto;
+	padding-top: 10px;
+	width: 1500px;
+	height: 700px;
+	/* 	background-color: grey; */
+}
+
+.content-left {
+	float: left;
+	width: 250px;
+	height: 100px;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: #e3b7ae;
+}
+
+.content-right {
+	float: right;
+	width: 1220px;
+	height: 600px;
+	margin-top: 10px;
+	margin-right: 10px;
+	background-color: #ecf0f1;
+}
+
+.left-title {
+	height: 50px;
+	width: 100%;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.left-title>a {
+	display: block;
+	width: 100%;
+	height: 50px;
+	/*垂直居中*/
+	line-height: 50px;
+	/*水平居中*/
+	text-align: center;
+	color: #2f3542;
+	font-weight: 600;
+}
+
+.seg {
+	height: 1px;
+	width: 100%;
+	background-color: #2f3542;
+}
+
+.nav2 {
+	margin-top: 5px 0;
+}
+
+.nav2-title {
+	height: 40px;
+	width: 100%;
+	color: #2f3542;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+}
+
+/* 左邊導覽列淡粉色長度 */
+.nav2-menu {
+	height: 60px;
+}
+
+.nav2-content {
+	width: 100%;
+	height: 100%;
+	background-color: #f3efec;
+}
+
+.nav2-content>a {
+	display: block;
+	height: 30px;
+	width: 100%;
+	color: black;
+	text-align: center;
+	line-height: 30px;
+	font-size: 16px;
+}
+
+.nav2-content>a:hover {
+	display: block;
+	height: 30px;
+	width: 100%;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 30px;
+	background-color: black;
+}
+
+/* ------和豐會員基本資料 MemberData 的 CSS參數--------- */
+.inputbox {
+	width: 600px;
+	height: 35px;
+}
+
+.gender {
+	margin-left: 80px;
+}
+
+.titleinfo {
+	padding-left: 20px;
+	margin-bottom: 30px;
+}
+
+input {
+	margin-bottom: 25px;
+}
+
+label {
+	font-size: 20px;
+}
+
+.submit-btn {
+	margin-top: 30px;
+	margin-left: 280px;
+	width: 100px;
+}
+
+</style>
+
+
+
+<!-- 郁芳首頁 HomePage 的 JavaScript 參數 -->
+<script type="text/javascript">
+//登入登出
+function signOut() {
+//     var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function () {
+//         console.log('Google User signed out.');
+//     });
+        $("#memberLogin").hide();
+        $("#adminLogin").hide();
+        $("#cartLogin").show();
+        $(".logoutState").hide();
+        $("#loginState").show();
+        window.location = "http://localhost:8080/IIIProject/yu/html/homePage.html";
+}
+
+// function onLoad() {
+//     gapi.load('auth2', function () {
+//         gapi.auth2.init();
+//     });
+// }
+
+function goToLogin() {
+    window.location = "http://localhost:8080/IIIProject/login.html";
+}
+
+$(function () {
+    let loginAccount = getCookie("account");
+    let loginStatus = getCookie("status");
+    if (loginAccount == '') {//未登入
+        $("#memberLogin").hide();
+        $("#adminLogin").hide();
+        $("#cartLogin").show();
+        $(".logoutState").hide();
+        $("#loginState").show();
+        
+    } else if(loginStatus == 'admin'){
+        $("#welecomeName").text("管理員，您好");
+        $("#memberLogin").hide();
+        $("#adminLogin").show();
+        $("#cartLogin").hide();
+        $(".logoutState").show();
+        $("#loginState").hide();
+        
+    } else {
+        $("#welecomeName").text(getCookie("username")+"，您好");
+        $("#memberLogin").show();
+        $("#adminLogin").hide();
+        $("#cartLogin").show();
+        $(".logoutState").show();
+        $("#loginState").hide();
+    }
+
+})
+</script>
+
+
+
+
+</head>
+<body style="background: #ecf0f1;">
+
+	<!-- Header Area -->
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ps-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="http://localhost:8080/IIIProject/yu/html/homePage.html"><img style="width:70px" src="http://localhost:8080/Finalproject/img/Logo/Logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/yu/html/homePage.html">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/news.html">最新消息</a>
+                        </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	商品
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/index">所有商品</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/flower">花束系列</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/gift">禮品系列</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	聯絡我們
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connect.html">客服</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectInfo.html">聯絡資訊</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                    </ul>
+                    <div class="d-flex ">                        
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div id="cartLogin" class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/Finalproject/CartStep1.jsp">購物車</a>
+                                </div>
+                            </li>
+                            <li class="nav-item" id="loginState">
+                                <div class="nav-link active ">
+                                    <button onclick="goToLogin();" class="btn btn-secondary">登入</button>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item logoutState">
+                            
+                                <div class="nav-link active ">
+                                    <span id="welecomeName" class="nav-link fw-bold text-decoration-underline" href="http://localhost:8080/IIIProject/MemberCenter/MemberCenterHome.html" style="cursor:context-menu"></span>
+                                </div>
+                             </li>       
+							<li id="memberLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+	                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html">基本資料</a>
+					                    </li>
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html">訂單管理</a>
+					                    </li>
+			                        </ul>
+                                </div>
+                            </li>
+                            <li id="adminLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/IIIProject/AdminPage/AdminHome.html">管理員介面</a>
+                                </div>
+                            </li>
+                            <li class="nav-item logoutState">        
+                                <div class="nav-link active ">
+                                    <button onclick="signOutCookie();signOut();" class="btn btn-secondary">登出</button>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+	<!-- Body Area -->
+	<div class="content">
+
+		<div class="content-left">
+			<div class="left-title">
+				<a href="#">會員中心</a>
+			</div>
+			<!-- 分割線 -->
+			<div class="seg"></div>
+			<!-- 菜單欄導航 -->
+			<div class="nav2">
+				<!-- 單個菜單項 -->
+				<div class="nav2-menu">
+					<!-- 子標題 -->
+					<div class="nav2-content">
+						<a href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html" id="allprods2" class="navtext">基本資料</a>
+						<a href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html" id="allflowers" class="navtext">訂單管理</a>
+					</div>
+
+					<!-- 分割線 -->
+					<div class="seg"></div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- -----------------------------------------------------內容區---------------------------------------------------------------------------- -->
+		<div class="content-right">
+
+			<div class="container">
+				<!-- <div class="text-left">
+            <a href="MemberCenterHome.html" class="btn btn-primary mt-5">返回會員資料中心 </a>
+        </div> -->
+				<h3 class="mx-auto text-center titleinfo">變更個人資料</h3>
+				<div class="d-flex justify-content-center">
+					<form id="dataform" action="http://localhost:8080/IIIProject/UpdateMember" method="POST">
+						<label>
+							姓名
+							<input type="text" id="name" class="inputbox" name="name" value="">
+						</label>
+						<br>
+						<label>
+							帳號
+							<input type="text" id="account" class="inputbox" name="account" value="">
+						</label>
+						<br>
+						<label>
+							密碼
+							<input type="password" id="password" class="inputbox" name="password" value="">
+						</label>
+						<br>
+						<label>
+							信箱
+							<input type="email" id="email" class="inputbox" name="email" value="">
+						</label>
+						<br>
+						<label>
+							生日
+							<input type="date" id="birthDate" class="inputbox" name="birthDate" value="">
+						</label>
+						<br>
+						<label class="genderlabel">
+							性別
+							<input type="radio" name="gender" class="gender" value="man">
+							男
+							<input type="radio" name="gender" class="gender" value="woman">
+							女
+						</label>
+						<br>
+						<label>
+							地址
+							<input type="text" id="address" class="inputbox" name="address" value="">
+						</label>
+						<br>
+						<label>
+							電話
+							<input type="text" id="phone" class="inputbox" name="phone" value="">
+						</label>
+						<br>
+
+						<input type="hidden" name="status" value="member">
+						<input type="hidden" name="page" value="member">
+						<input type="hidden" name="callBackUrl" id="CallBackUrl" value="">
+<!-- 						<input type="submit" style="margin-left: 200px;"> -->
+						<input type="submit" class="submit-btn">
+<!-- 						<label for=""> -->
+							<!-- <input type="button" value="返回" style="margin:0 auto;" onclick="location.href='login.html'"> -->
+<!-- 						</label> -->
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<hr>
+    <footer>
+        <div class="container offset-2 col-md-9" style="height: 150px">
+            <div class="row align-items-start">
+                <div class="col-lg-3">
+                    <div class="fw-bolder">客戶服務</div>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+                    <br>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+                </div>
+                <div class="col-lg-5">
+                    <div class="fw-bolder">聯絡我們</div>
+                    <table>
+                    	<tr>
+                    		<td>服務時間</td>
+                    		<td>：</td>
+                    		<td>周二至周日 09:00-17:00</td>
+                    	</tr>
+                    	<tr>
+                    		<td>電話</td>
+                    		<td>：</td>
+                    		<td>(07)9699885</td>
+                    	</tr>
+                    	<tr>
+                    		<td>地址</td>
+                    		<td>：</td>
+                    		<td>高雄市前金區中正四路211號8號樓之10</td>
+                    	</tr>
+                    	<tr>
+                    		<td>客服信箱</td>
+                    		<td>：</td>
+                    		<td>iiiflowerforever@gmail.com</td>
+                    	</tr>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                	<div class="fw-bolder">社群媒體</div>
+                    <a href="https://instagram.com/iiiflowerforever?utm_medium=copy_link" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/instagram.png" style="width:5vh" />
+                    	<span class="">iiiflowerforever</span>
+                    </a>
+                    <br>
+                    <a href="https://www.facebook.com/Flower-Forever-%E8%8A%B1%E9%96%8B%E4%B8%8D%E6%95%97-108098771615167/" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/facebook.png" style="width:5vh" />
+                    	<span class="">Flower Forever 花開不敗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+
+</html>

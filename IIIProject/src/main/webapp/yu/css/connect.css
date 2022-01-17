@@ -1,0 +1,68 @@
+﻿nav img {
+    width: 43px;
+}
+
+.title {
+    height: 60vh;
+    min-width: 100%;
+    background-image: url('../img/connect/title.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+#titleBlockTop {
+    height: 16vh
+}
+
+.w-23 {
+    width: 23%;
+}
+
+.sameHeight {
+    float: left;
+    display: inline;
+    padding-bottom: 200px;
+    margin-bottom: -200px;
+}
+
+#sideMenu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #fff0ec
+}
+
+#sideMenu li div {
+	font-weight:700;
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#sideMenu li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#sideMenu li a:hover {
+        background-color: #e58b67;
+        color: white;
+}
+
+#sideMenu .active {
+    background-color: #d0b4a9;
+    color: #552f20;
+}
+
+
+#sideMenu li {
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+.text-7vh {
+    font-size: 7vh;
+}

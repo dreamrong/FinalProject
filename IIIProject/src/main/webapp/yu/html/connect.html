@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>客服．Flower Forever</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link href="../css/connect.css" rel="stylesheet" />
+
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <meta name="google-signin-client_id"
+        content="1030132111174-it3lsbndt9981bcucrt2hi2e613hekj6.apps.googleusercontent.com">
+        
+	<script src="http://localhost:8080/IIIProject/js/checkLoginCookie.js"></script>
+    
+    <link rel="icon" href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />
+    <script>
+
+  //登入登出
+    function signOut() {
+//         var auth2 = gapi.auth2.getAuthInstance();
+//         auth2.signOut().then(function () {
+//             console.log('Google User signed out.');
+//         });
+            $("#memberLogin").hide();
+            $("#adminLogin").hide();
+            $("#cartLogin").show();
+            $(".logoutState").hide();
+            $("#loginState").show();
+            window.location = "http://localhost:8080/IIIProject/yu/html/homePage.html";
+    }
+
+//     function onLoad() {
+//         gapi.load('auth2', function () {
+//             gapi.auth2.init();
+//         });
+//     }
+
+    function goToLogin() {
+        window.location = "http://localhost:8080/IIIProject/login.html";
+    }
+    
+    $(function () {
+        let loginAccount = getCookie("account");
+        let loginStatus = getCookie("status");
+        if (loginAccount == '') {//未登入
+            $("#memberLogin").hide();
+            $("#adminLogin").hide();
+            $("#cartLogin").show();
+            $(".logoutState").hide();
+            $("#loginState").show();
+            
+        } else if(loginStatus == 'admin'){
+            $("#welecomeName").text("管理員，您好");
+            $("#memberLogin").hide();
+            $("#adminLogin").show();
+            $("#cartLogin").hide();
+            $(".logoutState").show();
+            $("#loginState").hide();
+            
+        } else {
+            $("#welecomeName").text(getCookie("username")+"，您好");
+            $("#memberLogin").show();
+            $("#adminLogin").hide();
+            $("#cartLogin").show();
+            $(".logoutState").show();
+            $("#loginState").hide();
+        }
+
+    })
+    
+        $(function () {
+
+            function sendMail(mailParameter, titleParameter, bodyParameter) {
+                let url = "https://script.google.com/macros/s/AKfycbww7PuOIEu6FZjNxRQixLorSrN_Jq4prJ9TgloHnjGwSMcHw0t4wYMXDk23j5SIZuTR/exec";
+
+                let mailText = mailParameter;
+                let titleText = titleParameter;
+                let bodyText = bodyParameter;
+                $.post(url, { mail: mailText, title: titleText, body: bodyText });
+                alert("已通知，等待客服回信!");
+                console.log("發送mail");
+            }
+
+
+            $("form").submit(function () {
+                return false;
+            })
+
+            $("#sendConnectBtn").click(function () {
+                let account = "iiiflowerforever@gmail.com";
+                let title = `聯絡我們 : ${$("#email").val()}`;
+                let mailBodyString = "";
+                $("#content").val().split("\n").map(function (e) {
+
+                    if (e != "") {
+                        mailBodyString += e + "<br>";
+                    }
+
+
+                });
+                mailBodyString
+
+                let body = `姓:${$("#lastName").val()} <br>`
+                    + `名:${$("#firstName").val()} <br>`
+                    + `信箱:${$("#email").val()} <br>`
+                    + `電話:${$("#cellphone").val()} <br>`
+                    + `內容:${mailBodyString} <br>`
+
+                // console.log(account,title,body);
+                // console.log(body);
+                sendMail(account, title, body);
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ps-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="http://localhost:8080/IIIProject/yu/html/homePage.html"><img style="width:70px" src="http://localhost:8080/Finalproject/img/Logo/Logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/yu/html/homePage.html">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/news.html">最新消息</a>
+                        </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	商品
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/index">所有商品</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/flower">花束系列</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/gift">禮品系列</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	聯絡我們
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connect.html">客服</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectInfo.html">聯絡資訊</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                    </ul>
+                    <div class="d-flex ">                        
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div id="cartLogin" class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/Finalproject/CartStep1.jsp">購物車</a>
+                                </div>
+                            </li>
+                            <li class="nav-item" id="loginState">
+                                <div class="nav-link active ">
+                                    <button onclick="goToLogin();" class="btn btn-secondary">登入</button>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item logoutState">
+                            
+                                <div class="nav-link active ">
+                                    <span id="welecomeName" class="nav-link fw-bold text-decoration-underline" href="http://localhost:8080/IIIProject/MemberCenter/MemberCenterHome.html" style="cursor:context-menu"></span>
+                                </div>
+                             </li>       
+							<li id="memberLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+	                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html">基本資料</a>
+					                    </li>
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html">訂單管理</a>
+					                    </li>
+			                        </ul>
+                                </div>
+                            </li>
+                            <li id="adminLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/IIIProject/AdminPage/AdminHome.html">管理員介面</a>
+                                </div>
+                            </li>
+                            <li class="nav-item logoutState">        
+                                <div class="nav-link active ">
+                                    <button onclick="signOutCookie();signOut();" class="btn btn-secondary">登出</button>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="title">
+        <div id="titleBlockTop"></div>
+        <div class="text-center">
+            <img src="../img/connect/StoreName_NoBackGround.png" class="d-inline-block m-3" style="width:60vw;max-height:38vh" />
+        </div>
+    </div>
+
+
+    <div class="offset-1 col-10 mt-3">
+        <div class="w-23 d-inliney sameHeight">
+
+            <nav id="sideMenu">
+                <ul>
+                   	<li>
+                        <div class="active">聯絡我們</div>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/IIIProject/yu/html/connect.html">客服</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/IIIProject/yu/html/connectInfo.html">聯絡資訊</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </div>
+        <div class="w-75 d-inline sameHeight ">
+            <div class="text-center text-7vh offset-1 col-10">客服</div>
+            <div class="text-center offset-1 col-10 mb-3 mt-3"><strong>Flower Forever花開不敗</strong> 客戶關懷服務中心於每週二至週日上午9時至下午5時 (國定假日除外) 為您提供服務。</div>
+
+            <form class="row g-3 offset-1 col-10 mb-3 mt-3">
+                <div class="col-md-6">
+                    <label for="lastName" class="form-label">姓</label>
+                    <input type="text" class="form-control" id="lastName">
+                </div>
+                <div class="col-md-6">
+                    <label for="firstName" class="form-label">名</label>
+                    <input type="text" class="form-control" id="firstName">
+                </div>
+                <div class="col-12">
+                    <label for="email" class="form-label">電子郵件信箱</label>
+                    <input type="email" class="form-control" id="email" placeholder="@example.com">
+                </div>
+                <div class="col-12">
+                    <label for="cellphone" class="form-label">手機號碼</label>
+                    <input type="text" class="form-control" id="cellphone" placeholder="09XXXXXXXX">
+                </div>
+                <div class="col-12">
+                    <label for="content" class="form-label">內容</label>
+                    <textarea class="form-control" id="content" rows="3"></textarea>
+                </div>
+                <div class="col-12">
+                    <button id="sendConnectBtn" type="submit" class="btn btn-secondary">送出</button>
+                </div>
+            </form>
+
+        </div>
+
+
+    </div>
+
+    <div class="clearfix"></div>
+   <!--footer-->
+    <hr />
+    <footer>
+        <div class="container offset-2 col-md-9" style="height: 150px">
+            <div class="row align-items-start">
+                <div class="col-lg-3">
+                    <div class="fw-bolder">客戶服務</div>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+                    <br>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+                </div>
+                <div class="col-lg-5">
+                    <div class="fw-bolder">聯絡我們</div>
+                    <table>
+                    	<tr>
+                    		<td>服務時間</td>
+                    		<td>：</td>
+                    		<td>周二至周日 09:00-17:00</td>
+                    	</tr>
+                    	<tr>
+                    		<td>電話</td>
+                    		<td>：</td>
+                    		<td>(07)9699885</td>
+                    	</tr>
+                    	<tr>
+                    		<td>地址</td>
+                    		<td>：</td>
+                    		<td>高雄市前金區中正四路211號8號樓之10</td>
+                    	</tr>
+                    	<tr>
+                    		<td>客服信箱</td>
+                    		<td>：</td>
+                    		<td>iiiflowerforever@gmail.com</td>
+                    	</tr>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                	<div class="fw-bolder">社群媒體</div>
+                    <a href="https://instagram.com/iiiflowerforever?utm_medium=copy_link" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/instagram.png" style="width:5vh" />
+                    	<span class="">iiiflowerforever</span>
+                    </a>
+                    <br>
+                    <a href="https://www.facebook.com/Flower-Forever-%E8%8A%B1%E9%96%8B%E4%B8%8D%E6%95%97-108098771615167/" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/facebook.png" style="width:5vh" />
+                    	<span class="">Flower Forever 花開不敗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,485 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Flower Forever</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <link href="../css/homePage.css" rel="stylesheet" />
+
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+
+<!--     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> -->
+<!--     <meta name="google-signin-client_id" content="1030132111174-it3lsbndt9981bcucrt2hi2e613hekj6.apps.googleusercontent.com"> -->
+
+	<script src="http://localhost:8080/IIIProject/js/checkLoginCookie.js"></script>
+    
+    <link rel="icon" href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />
+
+    <script>
+
+//登入登出
+        function signOut() {
+//             var auth2 = gapi.auth2.getAuthInstance();
+//             auth2.signOut().then(function () {
+//                 console.log('Google User signed out.');
+//             });
+                $("#memberLogin").hide();
+                $("#adminLogin").hide();
+                $("#cartLogin").show();
+                $(".logoutState").hide();
+                $("#loginState").show();
+                window.location = "http://localhost:8080/IIIProject/yu/html/homePage.html";
+        }
+
+//         function onLoad() {
+//             gapi.load('auth2', function () {
+//                 gapi.auth2.init();
+//             });
+//         }
+
+        function goToLogin() {
+            window.location = "http://localhost:8080/IIIProject/login.html";
+        }
+        
+        $(function () {
+            let loginAccount = getCookie("account");
+            let loginStatus = getCookie("status");
+            if (loginAccount == '') {//未登入
+                $("#memberLogin").hide();
+                $("#adminLogin").hide();
+                $("#cartLogin").show();
+                $(".logoutState").hide();
+                $("#loginState").show();
+                
+            } else if(loginStatus == 'admin'){
+                $("#welecomeName").text("管理員，您好");
+                $("#memberLogin").hide();
+                $("#adminLogin").show();
+                $("#cartLogin").hide();
+                $(".logoutState").show();
+                $("#loginState").hide();
+                
+            } else {
+                $("#welecomeName").text(getCookie("username")+"，您好");
+                $("#memberLogin").show();
+                $("#adminLogin").hide();
+                $("#cartLogin").show();
+                $(".logoutState").show();
+                $("#loginState").hide();
+            }
+
+        })
+        
+
+        
+        
+        $(function(){
+    		$(".coupleClick").click(function(){
+    			window.location="http://localhost:8081/index2/1003"
+    		});
+    		
+    		$(".giftClick").click(function(){
+    			window.location="http://localhost:8081/index2/1002"
+    		});
+
+    		$(".flowerClick").click(function(){
+    			window.location="http://localhost:8081/flower"
+    		});
+    		
+    		$(".presentClick").click(function(){
+    			window.location="http://localhost:8081/gift"
+    		});
+    		
+        })
+       
+
+        
+        
+        
+    </script>
+
+
+
+</head>
+
+<body>
+
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ps-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="http://localhost:8080/IIIProject/yu/html/homePage.html"><img style="width:70px" src="http://localhost:8080/Finalproject/img/Logo/Logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/yu/html/homePage.html">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="http://localhost:8080/IIIProject/news.html">最新消息</a>
+                        </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	商品
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/index">所有商品</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/flower">花束系列</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8081/gift">禮品系列</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                        <li class="nav-item dropdown">
+	                        <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                        	聯絡我們
+	                        </a>
+	                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connect.html">客服</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectInfo.html">聯絡資訊</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+			                    </li>
+			                    <li>
+			                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+			                    </li>
+	                        </ul>
+	                      </li>
+                    </ul>
+                    <div class="d-flex ">                        
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div id="cartLogin" class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/Finalproject/CartStep1.jsp">購物車</a>
+                                </div>
+                            </li>
+                            <li class="nav-item" id="loginState">
+                                <div class="nav-link active ">
+                                    <button onclick="goToLogin();" class="btn btn-secondary">登入</button>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item logoutState">
+                            
+                                <div class="nav-link active ">
+                                    <span id="welecomeName" class="nav-link fw-bold text-decoration-underline" href="http://localhost:8080/IIIProject/MemberCenter/MemberCenterHome.html" style="cursor:context-menu"></span>
+                                </div>
+                             </li>       
+							<li id="memberLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+	                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/MemberData.html">基本資料</a>
+					                    </li>
+					                    <li>
+					                        <a class="dropdown-item" href="http://localhost:8080/IIIProject/MemberCenter/OrdersMember.html">訂單管理</a>
+					                    </li>
+			                        </ul>
+                                </div>
+                            </li>
+                            <li id="adminLogin" class="nav-item dropdown">
+                                <div class="nav-link active ">
+                                    <a class="nav-link text-dark" href="http://localhost:8080/IIIProject/AdminPage/AdminHome.html">管理員介面</a>
+                                </div>
+                            </li>
+                            <li class="nav-item logoutState">        
+                                <div class="nav-link active ">
+                                    <button onclick="signOutCookie();signOut();" class="btn btn-secondary">登出</button>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="homebg">
+        <div id="homebgBlockTop"></div>
+        <img src="../img/homePage/StoreName_NoBackGround.png" class="rounded mx-auto d-block" style="width:60vw;max-height:60vh" />
+        <a href="https://instagram.com/iiiflowerforever?utm_medium=copy_link" class="text-decoration-none" target="_blank">
+        	<img class="igLogo" src="../img/homePage/instagram.png" />
+        </a>
+        <a href="https://www.facebook.com/Flower-Forever-%E8%8A%B1%E9%96%8B%E4%B8%8D%E6%95%97-108098771615167/" class="text-decoration-none" target="_blank">
+        	<img class="fbLogo" src="../img/homePage/facebook.png" />
+        </a>
+        <div id="homebgBlockMiddle"></div>            
+
+  				  <span class="col text-center h5 fst-italic titleWord" style="color:#585858">
+           			 我們為您準備浪漫，您準備好了嗎？
+   				 </span>
+
+
+
+        <img src="../img/homePage/arrow down icon.png" class="scrollArrow" style="height:1vh" />
+    </div>
+
+    
+	<div class="p-3">
+		<div class="coupleClick couple">
+	       	 <div class="productBlockTop"></div>
+		 	 <div class="row m-0 p-0" style="background-color: rgb(0 0 0 / 0.55);color:white">
+		  	 	<div class="col-md-2 m-0 p-0" style="height:10vh">
+					 <input class="buyBtn fw-bold border-0 h5 m-0 p-0 w-100 h-100" type="button" value="立即選購">	
+		  		</div>
+		  		<div class="col-md-1 m-0 p-0"></div>		  				  
+		  		<div class="col-md-2 m-0 p-0 d-flex align-items-center h5 text-center" style="height:10vh">
+		  			<div class="ellipsis text-center">
+						情人花束推薦
+		  			</div>
+		   		</div>
+		   		<div class="col-md-7 m-0 p-0 d-flex align-items-center h5" style="height:10vh">
+		   			 <div class="ellipsis">
+						戀愛一定要從收到一束花和正式的告白開始
+		   			 </div>
+		   		</div>
+		 	</div>
+		</div>
+    </div>
+    
+    
+    <div class="p-3">
+		<div class="giftClick gift">
+	       	 <div class="productBlockTop"></div>
+		 	 <div class="row m-0 p-0" style="background-color: rgb(0 0 0 / 0.55);color:white">
+		  	 	<div class="col-md-2 m-0 p-0" style="height:10vh">
+					 <input class="buyBtn fw-bold border-0 h5 m-0 p-0 w-100 h-100" type="button" value="立即選購">	
+		  		</div>
+		  		<div class="col-md-1 m-0 p-0"></div>		  				  
+		  		<div class="col-md-2 m-0 p-0 d-flex align-items-center h5 text-center" style="height:10vh">
+		  			<div class="ellipsis text-center">
+						日常花束推薦
+		  			</div>
+		   		</div>
+		   		<div class="col-md-7 m-0 p-0 d-flex align-items-center h5" style="height:10vh">
+		   			 <div class="ellipsis">
+						鮮花從來就不只是物品，而是一種生活方式
+		   			 </div>
+		   		</div>
+		 	</div>
+		</div>
+    </div>
+    
+    <div class="p-3">
+		 	<div class="row m-0 p-0">
+		  	 	<div class="col-md-6 m-0 " style="height:60vh">
+		  	 		<div class="flowerClick flower">
+					  	 <div class="ItemsBlockTop"></div>
+					 	 <div class="row m-0 p-0" style="background-color: rgb(0 0 0 / 0.55);color:white">
+					  	 	<div class="col-md-6 m-0 p-0" style="height:10vh">
+								 <input class="buyBtn fw-bold border-0 h5 m-0 p-0 w-100 h-100" type="button" value="立即選購">	
+					  		</div>		  				  
+					  		<div class="col-md-6 m-0 p-0 d-flex align-items-center h5 d-flex justify-content-center" style="height:10vh">
+					  			<div class="text-center">
+									花束系列
+					  			</div>
+					   		</div>
+					 	</div>
+		  	 		</div>
+		  		</div>
+		  	 	<div class="col-md-6 m-0 " style="height:60vh">
+		  	 		<div class="presentClick present">
+					  	 <div class="ItemsBlockTop"></div>
+					 	 <div class="row m-0 p-0" style="background-color: rgb(0 0 0 / 0.55);color:white">
+					  	 	<div class="col-md-6 m-0 p-0" style="height:10vh">
+								 <input class="buyBtn fw-bold border-0 h5 m-0 p-0 w-100 h-100" type="button" value="立即選購">	
+					  		</div>		  				  
+					  		<div class="col-md-6 m-0 p-0 d-flex align-items-center h5 d-flex justify-content-center" style="height:10vh">
+					  			<div class="text-center">
+									禮品系列
+					  			</div>
+					   		</div>
+					 	</div>
+		  	 		</div>
+		  		</div>
+		    </div>
+    </div>
+    
+    
+  
+    
+<!-- 	<div class="aaa"> -->
+<!-- 	    <div class="mt-5 mb-5"> -->
+<!-- 			<div id="hotProductTop"></div>   -->
+<!-- 	        <div id="hotTitle" class="text-center" style="height:30vh">熱門商品</div> -->
+	        
+<!-- 	        鮮花從來就不只是物品，而是一種生活方式。 -->
+<!-- 	        <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel"> -->
+	
+<!-- 	            <div class="carousel-inner"> -->
+<!-- 	                <div class="carousel-item active"> -->
+<!-- 	                    <div class="d-inline-block w-15"> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f1.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f1.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f1.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	                <div class="carousel-item"> -->
+<!-- 	                    <div class="d-inline-block w-15"> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f2.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f2.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f2.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	                <div class="carousel-item"> -->
+<!-- 	                    <div class="d-inline-block w-15"> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f3.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f3.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="d-inline-block w-23"> -->
+<!-- 	                        <img src="../img/homePage/f3.jpg" class="d-block w-100" /> -->
+<!-- 	                        <button type="button" class="d-block btn btn-outline-primary w-100">選購</button> -->
+<!-- 	                    </div> -->
+<!-- 	                </div> -->
+<!-- 	            </div> -->
+<!-- 	            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" -->
+<!-- 	                data-bs-slide="prev"> -->
+<!-- 	                <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+<!-- 	                <span class="visually-hidden">Previous</span> -->
+<!-- 	            </button> -->
+<!-- 	            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" -->
+<!-- 	                data-bs-slide="next"> -->
+<!-- 	                <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+<!-- 	                <span class="visually-hidden">Next</span> -->
+<!-- 	            </button> -->
+<!-- 	        </div> -->
+<!-- 			<div id="hotProductTop"></div>  -->
+<!--     </div> -->
+
+<!-- 	</div> -->
+
+
+<!--     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel"> -->
+<!--         <div class="carousel-inner"> -->
+<!--             <div class="carousel-item active clientbg"> -->
+<!--                 <img src="../img/homePage/client1.jpg" -->
+<!--                     class="rounded mx-auto d-block w-10 rounded-circle mt-15vh w-min-100px" /> -->
+<!--                 <div id="clientWord" class="offset-2 col-8 h-35vh overflow-hidden mt-3vh p-4 h2"> -->
+<!--                     很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香!很香! -->
+
+<!--                 </div> -->
+<!--             </div> -->
+<!--             <div class="carousel-item clientbg"> -->
+<!--                 <img src="../img/homePage/client2.jpg" -->
+<!--                     class="rounded mx-auto d-block w-10 rounded-circle mt-15vh w-min-100px" /> -->
+<!--                 <div id="clientWord" class="offset-2 col-8 h-35vh overflow-hidden mt-3vh p-4 h2"> -->
+<!--                     嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨嗨 -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--             <div class="carousel-item clientbg"> -->
+<!--                 <img src="../img/homePage/client3.jpg" -->
+<!--                     class="rounded mx-auto d-block w-10 rounded-circle mt-15vh w-min-100px" /> -->
+<!--                 <div id="clientWord" class="offset-2 col-8 h-35vh overflow-hidden mt-3vh p-4 h2"> -->
+<!--                     棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~棒~ -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev"> -->
+<!--             <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+<!--             <span class="visually-hidden">Previous</span> -->
+<!--         </button> -->
+<!--         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next"> -->
+<!--             <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+<!--             <span class="visually-hidden">Next</span> -->
+<!--         </button> -->
+<!--     </div> -->
+
+    <hr />
+    <footer>
+        <div class="container offset-2 col-md-9" style="height: 150px">
+            <div class="row align-items-start">
+                <div class="col-lg-3">
+                    <div class="fw-bolder">客戶服務</div>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectReturned.html">退換貨政策</a>
+                    <br>
+                    <a class="text-start text-decoration-none link-secondary" href="http://localhost:8080/IIIProject/yu/html/connectPrivacy.html">隱私權政策</a>
+                </div>
+                <div class="col-lg-5">
+                    <div class="fw-bolder">聯絡我們</div>
+                    <table>
+                    	<tr>
+                    		<td>服務時間</td>
+                    		<td>：</td>
+                    		<td>周二至周日 09:00-17:00</td>
+                    	</tr>
+                    	<tr>
+                    		<td>電話</td>
+                    		<td>：</td>
+                    		<td>(07)9699885</td>
+                    	</tr>
+                    	<tr>
+                    		<td>地址</td>
+                    		<td>：</td>
+                    		<td>高雄市前金區中正四路211號8號樓之10</td>
+                    	</tr>
+                    	<tr>
+                    		<td>客服信箱</td>
+                    		<td>：</td>
+                    		<td>iiiflowerforever@gmail.com</td>
+                    	</tr>
+                    </table>
+                </div>
+                <div class="col-lg-3">
+                	<div class="fw-bolder">社群媒體</div>
+                    <a href="https://instagram.com/iiiflowerforever?utm_medium=copy_link" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/instagram.png" style="width:5vh" />
+                    	<span class="">iiiflowerforever</span>
+                    </a>
+                    <br>
+                    <a href="https://www.facebook.com/Flower-Forever-%E8%8A%B1%E9%96%8B%E4%B8%8D%E6%95%97-108098771615167/" class="text-decoration-none link-secondary" target="_blank">
+                    	<img class="mt-1 mb-1" src="http://localhost:8080/Finalproject/img/FB_IG_Logo/facebook.png" style="width:5vh" />
+                    	<span class="">Flower Forever 花開不敗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

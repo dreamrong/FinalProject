@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>會員註冊．Flower Forever</title>
+  <link rel="icon" href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      background-color: rgb(255, 255, 255);
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-control {
+      margin: 0px 0px 10px;
+    }
+
+    .text-center {
+      padding-bottom: 20px;
+    }
+
+    .btnsuccess{
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+    }
+
+    .form-check-inline{
+      display: inline-block;
+      margin: 15px 0 15px;
+      padding-right: 65px;
+    }
+    
+  </style>
+
+  <script>
+    function iconPosition(){
+      // let aL=$("#account").offset().left+$("#account").width();
+      let aT=$("#account").offset().top+$("#account").height();
+      let aM1=$(".col-10").offset().left+$(".col-10").width();
+      let aM2=$(".col-10").children().eq(0).offset().left+$(".col-10").children().eq(0).width();
+      let aM=(aM1+aM2)*48/100;
+      $("#icon").offset({top: aT, left: aM})
+    }
+    $(function () {
+      iconPosition();
+      $(window).resize(function(){
+        
+        iconPosition();
+      })
+
+
+
+      var checkAccount=false;
+      const accountIconError='<i class="material-icons" style="font-size:48px;color:red">report_problem</i>';
+      const accountIconSuccess='<i class="material-icons" style="font-size:48px;color:green">done</i>';
+      $("#account").focusout(function () {
+        let account = $(this).val();
+        // console.log("account:"+account);
+        fetch(`http://localhost:8080/IIIProject/CheckMember?account=${account}`).then(e => e.text()).then(x => x.includes("Success")).
+          then(function (bool) {
+            if (bool) {
+              $("#icon").html(accountIconSuccess);
+              iconPosition();
+              // alert("此帳號尚未註冊!");
+              checkAccount=true;
+            } else {
+              $("#icon").html(accountIconError);
+              iconPosition();
+              checkAccount=false;
+              alert("此帳號已經註冊!");
+              // $("#account").focus();
+            }
+
+          })
+      })
+
+      $("form").submit(function () {
+        if(checkAccount==true){
+          alert("註冊成功!");
+          return true;
+        }else{
+          alert("請更改帳號!!");
+          return false;
+        }
+        
+      })
+
+
+    })
+
+  </script>
+</head>
+
+<body>
+  <div class="container mt-5 ">
+    <div class="row">
+      <div class="col-10">
+
+        <div style="width: 60%; margin:0 auto; padding:0">
+
+          <h2 class="text-center">會員註冊</h2>
+
+
+          <form action="http://localhost:8080/IIIProject/SignUp.jsp" class="mb-5" method="POST">
+
+            <div class="form-group">
+              <label for="account">帳號</label>
+              <input type="text" name="account" id="account" class="form-control" required>
+              <label for="password">密碼</label>
+              <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="name">姓名</label>
+              <input type="text" name="name" id="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="birthDate">出生日期</label><br>
+              <input type="Date" name="birthDate" id="birthDate" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <div class="form-check-inline">
+                <h6 class="inline">性別</h6>
+              </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="gender" value="man">男
+                  </label>
+                </div>
+    
+                <div class="form-group form-check-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="gender" value="woman">女
+                  </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="mail">電子信箱</label>
+              <input type="email" name="email" id="mail" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="address">住址</label>
+              <input type="text" name="address" id="address" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="phone">連絡電話</label>
+              <input type="text" name="phone" id="phone" class="form-control">
+            </div>
+
+            <input type="hidden" name="status" value="member">
+
+            <div class="btnsuccess">
+              <button style="width: 30%;height: 50px;" type="submit" class="btn btn-success ">提交</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <div class="col-2">
+        <span id="icon">
+          <!-- <i class="material-icons" style="font-size:48px;color:green">done</i> -->
+        </span>
+      </div>
+    </div>
+
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>會員登入．Flower Forever</title>
+<link rel="icon"
+	href="http://localhost:8080/Finalproject/img/Logo/Icon_Logo.png" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="js/checkLoginCookie.js"></script>
+
+<!-- Google Login API-Start -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id"
+	content="1030132111174-it3lsbndt9981bcucrt2hi2e613hekj6.apps.googleusercontent.com">
+
+<script>
+	var googleLoginFlag = 0;
+	function googleLoginApiFlag() {
+		googleLoginFlag = 1;
+	}
+	function onSignIn(googleUser) {
+		if (googleLoginFlag != 1) {
+			return false;
+		}
+		var profile = googleUser.getBasicProfile();
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		$("#hiddenForm #name2").val(profile.getName())
+		$("#hiddenForm #account2").val(profile.getEmail())
+		$("#hiddenForm #password2").val(profile.getId())
+		$("#hiddenForm #email2").val(profile.getEmail())
+
+		let id_token = googleUser.getAuthResponse().id_token;
+		// 待做:這裡要把id_token根據Email透過post更新SQL的資料
+
+		setTimeout(oauth(id_token, profile), 1000);
+
+	}
+
+	function signOut() {
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function() {
+			console.log('User signed out.');
+		});
+	}
+
+	function oauth(token, profile) {
+		fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${token}`)
+				.then(function(response) {
+					return response.json();
+				})
+				.then(
+						function(myJson) {
+							console.log(myJson);
+							// console.log("iss:"+myJson['iss'].length);
+							// console.log("exp:"+myJson['exp'].length);
+							let iss = myJson['iss'].length;
+							let exp = myJson['exp'].length
+							if (iss != 0 && exp != 0) {
+								console.log("Google Token驗證成功");
+
+								// 1.如果是用Google登入，要從後端驗證是否為現有客戶，不是的話就建立後再登入，是的話就直接登入
+								let account = $("#account2").val();
+								let password = $("#password2").val();
+								const url = `http://localhost:8080/IIIProject/Login.jsp?account=${account}&password=${password}`;
+								fetch(url, {
+									method : 'GET'
+								}).then(function(msg) {
+									return msg.text();
+								}).then(
+										function(res) {
+											if (res.includes('Success')) {
+												let user = res.split(",")[1];
+												let status = res.split(",")[2];
+												let accountCookie = res
+														.split(",")[3];
+												console.log("登入者:" + user);
+
+												// 製作前往首頁的登入Cookie
+												setCookie("username", user, 1);//cookie有效一天
+												setCookie("status", status, 1);//cookie有效一天
+												setCookie("account", accountCookie, 1);//cookie有效一天    
+// 												document.cookie = "status="+ status;
+// 												document.cookie = "account="+ accountCookie;
+												return true;
+											}
+											;
+										}).then(function(e) {
+									if (e == true) {
+										console.log("Google通過，執行登入~~");
+										window.location = "AdminPage/AdminHome.html";
+									} else {
+										let user = profile.getName();
+										// 製作前往首頁的登入Cookie
+										setCookie("username", user, 30);
+										console.log("Google尚未註冊過本網站會員!!!");
+										$("#hiddenForm").submit();//如果第一次google帳號登入要進行註冊
+
+									}
+								})
+
+								return true;
+							} else {
+								console.log("Google Token驗證失敗");
+								return false;
+							}
+						});
+	}
+	$(
+			function() {
+				$("#loginBtn")
+						.click(
+								function() {
+
+									// 這裡需要把帳號密碼傳去後端做驗證，看有無此帳號，因為現在沒後端，所以暫且沒法做
+
+									let account = $("#account").val();
+									let password = $("#password").val();
+									if (account == '' || password == '') {
+										alert("請輸入完整帳號密碼!!");
+										return false;
+									}
+									const url = `http://localhost:8080/IIIProject/Login.jsp?account=${account}&password=${password}`;
+									fetch(url, {
+										method : 'GET'
+									})
+											.then(function(msg) {
+												return msg.text();
+											})
+											.then(
+													function(res) {
+														if (res
+																.includes('Success')) {
+
+															let user = res
+																	.split(",")[1];
+															let status = res
+																	.split(",")[2];
+															let accountCookie = res
+																	.split(",")[3];
+															console.log("測試:"
+																	+ user);
+
+															// 製作前往首頁的登入Cookie
+															setCookie(
+																	"username",
+																	user, 1);//cookie有效一天
+															setCookie("status",
+																	status, 1);//cookie有效一天
+															setCookie(
+																	"account",
+																	accountCookie,
+																	1);//cookie有效一天                        
+															//document.cookie="status="+status;
+															//document.cookie="account="+accountCookie;
+															return true;
+														}
+														;
+													})
+											.then(
+													function(e) {
+														if (e == true) {
+															console
+																	.log("通過，執行登入~~");
+															if (getCookie("status") == "admin") {
+																window.location = "AdminPage/AdminHome.html"
+															} else {
+																window.location = "yu/html/homePage.html";
+															}
+
+														} else {
+															console
+																	.log("通關失敗!!!");
+															alert("帳密不正確!!!");
+														}
+													})
+
+								})
+			})
+</script>
+<!-- Google Login API-End -->
+<style>
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+	max-width: 100%;
+}
+
+.container {
+	background-image: url("yu/img/home/loginbg.jpg");
+	background-position: 50% 5%;
+	height: 800px;
+	display: flex;
+	justify-content: center;
+}
+
+.row1 {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.loginbox {
+	width: 500px;
+	height: 500px;
+	margin-left: 900px;
+}
+
+.btn .btn-primary {
+	width:10px;
+	margin: 0 10px 0 10px;
+}
+
+.btn{
+	background:#ebece6;
+	border:1px #b2bec3 solid;
+	font-size:18px;
+	font-weight: bold;
+}
+
+.btn:hover{
+	background:#95a5a6;
+	color:#ecf0f1;
+}
+
+.row {
+	justify-content: space-evenly;
+}
+
+.forget {
+	display: flex;
+	justify-content: center;
+	font-size: 20px;
+	color: black;
+	background-color: rgba(255,255,255,0.5);
+	text-decoration: none;
+	width:100%;
+	
+}
+
+label {
+	font-size: 20px;
+	margin: 10px 0px 10px;
+}
+
+/* 會員登入和頁面頂不的間距 */
+.text-center{
+padding-top:200px;
+font-weight: bold;
+}
+
+/* 會員登入和輸入欄的間距 */
+.form-group{
+	margin-top: 60px;
+}
+
+</style>
+</head>
+
+<body>
+	<form id="hiddenForm"
+		action="http://localhost:8080/IIIProject/SignUp.jsp" method="POST">
+		<input type="hidden" id="name2" name="name" value=""> <input
+			type="hidden" id="account2" name="account" value=""> <input
+			type="hidden" id="password2" name="password" value=""> <input
+			type="hidden" id="email2" name="email" value=""> <input
+			type="hidden" id="status2" name="status" value="member">
+	</form>
+
+	<div class="container">
+		<!--         <div style="width: 50%;margin:25px auto;" class="bg-white"> -->
+		<div class="loginbox">
+			<h1 class="text-center">會員登入</h1>
+			<form action="AdminPage/AdminHome.html" method="POST">
+				<div class="form-group">
+					<label for="account">帳號</label> 
+					<input type="text" name="account" id="account" class="form-control" required>
+					
+					<label for="password">密碼</label> 
+					<input type="password" name="password" id="password" class="form-control" required>
+				</div>
+
+				<div class="row p-3 ">
+					<button id="loginBtn" type="button" class="btn col-3 ">登入</button>
+					<a href="sign up.html" class="btn col-3">註冊</a> 
+					<a href="forgetPassword.html" class="btn col-3">忘記密碼</a>
+				</div>
+
+			</form>
+
+<!-- -------------------------Google 登入方式------------------------- -->
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-4"> -->
+<!-- 					<p class="text-center mt-1">其他登入方式</p> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-8"> -->
+<!-- 					<div class="g-signin2" onclick="googleLoginApiFlag();" -->
+<!-- 						data-onsuccess="onSignIn"></div> -->
+<!-- 					<a href="#" onclick="signOut();">Sign out</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+		</div>
+
+
+
+	</div>
+	
+	 <hr />
+    <footer>
+
+        <div class="offset-2 col-md-8">
+            <div class="row align-items-start">
+                <div class="col-md-4">
+                    <div>客戶服務</div>
+                    <div>退換貨政策</div>
+                    <div>隱私權政策</div>
+                </div>
+
+                <div class="col-md-4">
+                    <div>聯絡我們</div>
+                    <div>客服信箱:fn@gmail.com</div>
+                    <div>服務時間:Mon-Fir,08:00-17:00</div>
+                    <div>地址:80147高雄市前金區中正四路211號8號樓之1</div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <img src="http://localhost:8080/Finalproject/img/FB_IG_Logo/instagram.png" style="width:5vh" />
+                    <img src="http://localhost:8080/Finalproject/img/FB_IG_Logo/facebook.png" style="width:5vh" />
+                </div>
+
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
